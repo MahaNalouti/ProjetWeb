@@ -61,13 +61,13 @@
   <ul class="side-menu">
    <li>
     <a href="">
-     <i class="bx bx-table icon"></i>
+    <i class='bx bxs-cog icon' ></i>
      Parametre
     </a>
    </li>
    <li>
     <a href="logout.php">
-     <i class="bx bx-table icon"></i>
+     <i class='bx bxs-log-out-circle icon logout'></i>
      Deconnexion
     </a>
    </li>
