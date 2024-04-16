@@ -59,8 +59,8 @@ if(isset($_POST['ajoutM'])){
 <body>
 	
 <!-- NAVBAR -->
-<?php	/*
-	include("side_navbar.php");*/
+<?php	
+	include("side_navbar.php");
 	?>
 
 	<!-- NAVBAR -->
