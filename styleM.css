@@ -517,7 +517,29 @@ main .btn-send {
 	color: var(--light);
 	cursor: pointer;
 	border: none;
-	transition: all .3s ease;
+	margin-top: 15px;
+
+}
+.btn-second {
+	padding: 0 16px;
+	background: var(--dark-grey);
+	border-radius: 5px;
+	color: var(--light);
+	cursor: pointer;
+	border: none;
+
+}
+.btn-green {
+	padding: 0 16px;
+	background: var(--green);
+	border-radius: 5px;
+	color: var(--light);
+	cursor: pointer;
+	border: none;
+
+}
+.btn-green:hover{
+	background: var(--dark-green);
 }
 main .btn-send:hover {
 	background: var(--dark-blue);
