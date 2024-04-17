@@ -27,7 +27,7 @@ include("../include/connection.php");
 <body>
 	
 <?php
-    if(isset($_POST['ModifM'])){
+  if(isset($_POST['ModifM'])){
         $idM=htmlspecialchars(trim($_POST['IdM']));
         $Nom=htmlspecialchars(trim($_POST['Nom']));
         $Prenom=htmlspecialchars(trim($_POST['Prenom']));
@@ -40,27 +40,40 @@ include("../include/connection.php");
         $Sal=htmlspecialchars(trim($_POST['Sal']));
         $Spec=htmlspecialchars(trim($_POST['Spec']));
 
-        if(!empty($idM) || !empty($Nom) || !empty($Prenom) || !empty($Unom) || !empty($email) || !empty($sexe) || !empty($Tel) || !empty($Mdp) || 
-        !empty($Cmdp) || !empty($Sal) || !empty($Spec) ){
-            $query="UPDATE doctors SET nom='$Nom', prenom='$Prenom',unom='$Unom',
-            email='$email',sexe='$sexe',tel='$Tel',mdp='$Mdp',salaire='$Sal',specialite='$Spec'
-            where id='$idM'";
-            $query_run=mysqli_query($con,$query);
-            if($query_run){
-                $_SESSION['message']="Medecin modifie";
-                header("Location:list-medecin.php");
+        try {
+            if (!empty($idM) || !empty($Nom) || !empty($Prenom) || !empty($Unom) || !empty($email) || !empty($sexe) || !empty($Tel) || !empty($Mdp) || 
+                !empty($Cmdp) || !empty($Sal) || !empty($Spec)) {
+                
+                $query = "UPDATE doctors SET nom=:nom, prenom=:prenom, unom=:unom,
+                          email=:email, sexe=:sexe, tel=:tel, mdp=:mdp, salaire=:salaire, specialite=:specialite
+                          WHERE id=:id";
+                $stmt = $connect->prepare($query);
+                $stmt->bindParam(':nom', $Nom);
+                $stmt->bindParam(':prenom', $Prenom);
+                $stmt->bindParam(':unom', $Unom);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':sexe', $sexe);
+                $stmt->bindParam(':tel', $Tel);
+                $stmt->bindParam(':mdp', $Mdp);
+                $stmt->bindParam(':salaire', $Sal);
+                $stmt->bindParam(':specialite', $Spec);
+                $stmt->bindParam(':id', $idM);
+        
+                $stmt->execute();
+        
+                $_SESSION['message'] = "Médecin modifié";
+                header("Location: list-medecin.php");
                 exit();
-            }else{
-                $_SESSION['message']="Medecin non modifie";
-                header("Location:modif-medecin.php");
+            } else {
+                $_SESSION['message'] = "Veuillez remplir tous les champs";
+                header("Location: list-medecin.php");
                 exit();
             }
-        }else{
-            $_SESSION['message']="Veuillez remplir tous les champs";
-            header("location:list-medecin.php");
+        } catch (PDOException $e) {
+            $_SESSION['message'] = "Erreur lors de la modification du médecin : " . $e->getMessage();
+            header("Location: list-medecin.php");
+            exit();
         }
-
-        
     }
 
 
@@ -92,11 +105,12 @@ include("../include/connection.php");
 						<div>
                         <?php 
                     if(isset($_POST['id_modif'])){
-                       $id=mysqli_real_escape_string($con,$_POST['id_modif']);
-                        $query="SELECT * FROM doctors where id='$id'";
-                        $query_run=mysqli_query($con,$query);
-                        if(mysqli_num_rows($query_run)>0){
-                            $medecin=mysqli_fetch_array($query_run);
+                      $id = $_POST['id_modif'];
+                                $query = "SELECT * FROM doctors WHERE id=:id";
+                                $stmt = $connect->prepare($query);
+                                $stmt->bindParam(':id', $id);
+                                $stmt->execute();
+			    	$medecin = $stmt->fetch(PDO::FETCH_ASSOC);
                             ?>
             <form action="" method="post" id="form">
                                 <input type="hidden" name="IdM" value="<?php echo $medecin['id']?>">
@@ -188,7 +202,7 @@ include("../include/connection.php");
                         }else{
                             echo "<h4>Medecin non trouvé</h4>";
                         }
-                    }
+                    
                            
                         
                     ?>
