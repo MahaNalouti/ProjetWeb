@@ -1,10 +1,9 @@
 <?php
 session_start();
-include("../include/connection.php");
+require('hiba/connection.php');
 
 if(isset($_POST['ajoutM'])){
-
-    $nom = htmlspecialchars(trim($_POST['Nom']));
+	 $nom = htmlspecialchars(trim($_POST['Nom']));
    $prenom = htmlspecialchars(trim($_POST['Prenom']));
    $unom = htmlspecialchars(trim($_POST['Unom']));
    $email = htmlspecialchars(trim($_POST['email']));
@@ -18,26 +17,53 @@ if(isset($_POST['ajoutM'])){
    if(!empty($nom) && !empty($prenom) && !empty($unom) && !empty($email) && !empty($sexe) && !empty($tel) && !empty($mdp) && 
    !empty($Cmdp) && !empty($sal) && !empty($spec) ){
        
-       $sql="SELECT * FROM doctors WHERE unom = '$unom'";
-       $result = $con->query($sql);
-       $query="SELECT * FROM doctors where specialite='$spec'";
-       $query_run=$con->query($query);
-       if ($result->num_rows > 0){
-               $_SESSION['message']="Nom utilisateur déja pris";
-       }else if($query_run->num_rows>0){
-            $_SESSION['message']="Cette specialité est déja prise";
-       }else{
-            $hashed_mdp=password_hash($mdp,PASSWORD_DEFAULT);
-           $query = "INSERT INTO doctors (nom,prenom,unom,email,tel,sexe,mdp,salaire,specialite) 
-           VALUES ('$nom','$prenom','$unom','$email','$tel','$sexe','$hashed_mdp','$sal','$spec')";
-           $query_run =$con->query($query);
-           if($query_run ){
-               $_SESSION['message']="Medecin ajouté";
-           } else {
-               $_SESSION['message']="Medecin non ajouté";
-               header("Location:ajout-medecin.php");
-           }
+       $sql="SELECT COUNT(*) AS count FROM doctors WHERE unom = :unom";
+       $stmt=$connect->prepare($sql);
+       $stmt->bindParam(':unom',$unom);
+       try{
+        $stmt->execute();
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        if($result['count']>0){
+           $_SESSION['message']="Nom utilisateur déja pris";              
+           $stmt->execute();
+             }else{
+                
+                $sql_spec="SELECT COUNT(*) AS count FROM doctors WHERE specialite = ':specialite'";
+                $stmt_spec=$connect->prepare($sql_spec);
+                $stmt_spec->bindParam(':specialite',$spec);
+                $stmt_spec->execute();
+                $result_spec=$stmt_spec->fetch(PDO::FETCH_ASSOC);
+                if($result_spec['count']>0){
+                    $_SESSION['message']='La spécialité existe déja';
+                }else{
+                    $hashed_mdp=password_hash($mdp,PASSWORD_DEFAULT);
+                    $sql_insert = "INSERT INTO doctors (nom,prenom,unom,email,tel,sexe,mdp,salaire,specialite) 
+                    VALUES (:nom,:prenom,:unom,:email,:tel,:sexe,:mdp,:sal,:specialite)";
+                    $stmt_insert=$connect->prepare($sql_insert);
+                    $stmt_insert->bindParam(':nom',$nom);
+                    $stmt_insert->bindParam(':prenom',$prenom);
+                    $stmt_insert->bindParam(':unom',$unom);
+                    $stmt_insert->bindParam(':email',$email);
+                    $stmt_insert->bindParam(':tel',$tel);
+                    $stmt_insert->bindParam(':sexe',$sexe);
+                    $stmt_insert->bindParam(':mdp',$hashed_mdp);
+                    $stmt_insert->bindParam(':salaire',$sal);
+                    $stmt_insert->bindParam(':specialite',$spec);
+                    try{
+                        $stmt_insert->execute();
+                        $_SESSION['message']="Medecin ajouté";
+                    }catch(PDOException $e){
+                        $_SESSION['message']="Errer lors de l'ajout d medecin:". $e->getMessage();
+                        header("Location:ajout-medecin.php");
+                    }
+                }
+             }  
+             
+
+       }catch(PDOException $e){
+        $_SESSION['message']="Erreur d'insertion:".$e->getMessage();
        }
+       $stmt->closeCursor();
    }
    else{
      
