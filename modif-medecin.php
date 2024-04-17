@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../include/connection.php");
+include("hiba/connection.php");
 /*
 	$nom='';
 	if(isset($_SESSION['admin'])){
