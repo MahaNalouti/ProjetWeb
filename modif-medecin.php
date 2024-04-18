@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("hiba/connection.php");
+include("connection.php");
 /*
 	$nom='';
 	if(isset($_SESSION['admin'])){
@@ -22,7 +22,7 @@ include("hiba/connection.php");
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="input.css">
-	<title>Listes Medecins</title>
+	<title>Modifier Medecin</title>
 </head>
 <body>
 	
