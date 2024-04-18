@@ -90,15 +90,14 @@ if(isset($_POST['ajoutM'])){
 	?>
 
 	<!-- NAVBAR -->
-	<section id="content">
 
 		<!-- MAIN -->
 		<main>
 			<h1 class="title">Ajouter Medecin</h1>
 			<ul class="breadcrumbs">
-				<li><a href="#">Ajouter Medecin</a></li>
+				<li><a href="list-medecin.php">Medecin</a></li>
 				<li class="divider">/</li>
-				<li><a href="#" class="active">Medecin</a></li>
+				<li><a href="ajout-medecin.php" class="active">Ajouter Medecin</a></li>
 			</ul>
             <div>
                 <?php
@@ -205,7 +204,6 @@ if(isset($_POST['ajoutM'])){
 			</div>
 		</main>
 		<!-- MAIN -->
-	</section>
 	<!-- NAVBAR -->
 
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
