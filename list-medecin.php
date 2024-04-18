@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("hiba/connection.php");
+include("connection.php");
 
 ?>
 <!DOCTYPE html>
@@ -29,15 +29,12 @@ include("hiba/connection.php");
 	*/
 
 	?>
-	<!-- SIDEBAR -->
 	
-	<!-- SIDEBAR -->
 
 	<!-- NAVBAR -->
-	<section id="content">
+	include("hiba/side_navbar.php");
 		<!-- NAVBAR -->
 	
-		<!-- NAVBAR -->
 
 		<!-- MAIN -->
 		<main>
