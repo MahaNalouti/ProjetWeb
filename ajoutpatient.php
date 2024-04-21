@@ -88,7 +88,7 @@ include("connection.php");
 		<main>
 			<h1 class="title">Dashboard</h1>
 			<ul class="breadcrumbs">
-				<li><a href="listpatient.php">Tableau de bord</a></li>
+				<li><a href="listpatient.php">listpatients</a></li>
 				<li class="divider">/</li>
 				<li><a href="#" class="active">Ajouter Patient</a></li>
 			</ul>
