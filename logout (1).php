@@ -23,6 +23,12 @@ if(isset($_POST['logout_confirm'])) {
     <link rel="stylesheet" type="text/css"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     
     <style >
+        body{
+            background-image: url(back.jpg);
+            color:white;
+            padding-top:100px;
+            text-align:center;
+        }
       .btn:hover{
         color: #0076d4;
         background-color: #f8f9fa;
@@ -30,7 +36,7 @@ if(isset($_POST['logout_confirm'])) {
       }
     </style>
 </head>
-<body style="background: -webkit-linear-gradient(left, #3931af, #00c6ff);color:white;padding-top:100px;text-align:center;">
+<body style="color:white;padding-top:100px;text-align:center;">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
