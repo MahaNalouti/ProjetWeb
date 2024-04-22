@@ -1,0 +1,18 @@
+table{
+    width: 100%;
+    overflow: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+thead th{
+    position: sticky;
+    top: 0;
+    font-size: 15px;
+    color: #b0ccf7;
+    background-color: #f6f9fc;
+}
+th,td{
+    border-bottom: 1px solid #dddddd;
+    padding: 10px 20px;
+    text-align: center;
+}
