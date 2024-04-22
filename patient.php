@@ -9,7 +9,8 @@ include("connection.php");
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="style.css">
-	<title>Patients</title>
+	<link rel="stylesheet" href="tableau.css">
+	<title>AdminSite</title>
 </head>
 <body>
 <?php
@@ -50,21 +51,16 @@ include("connection.php");
 	<section id="sidebar">
 		<a href="#" class="brand"><i class='bx bx-plus-medical icon' ></i>Hopital Medical</a>
 		<ul class="side-menu">
-			<li class="side"><a href="medecin.php" ><i class='bx bxs-dashboard icon' ></i>Tableau de Bord</a></li>
+			<li class="side"><a href="medecin.php" ><i class='bx bxs-dashboard icon' ></i> Tableau de bord</a></li>
 			<li class="side">
-				<a href="#" class="active"><i class='bx bx-table icon' ></i>Patients</a>
+				<a href="patient.php" class="active"><i class='bx bx-table icon' ></i>Patients</a>
 			</li>
 			<li class="side">
-				<a href="#"><i class='bx bx-table icon' ></i>Rendez vous</a>
+				<a href="rendez-vous.php"><i class='bx bx-table icon' ></i>Rendez vous</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
-			<li>
-				<a href="parametre.php">
-				<i class='bx bxs-cog icon' ></i>
-					Parametre
-				</a>
-			</li>
+			
 			<li>
 				<a href="logout.php">
 				<i class='bx bxs-log-out-circle icon logout'></i>
@@ -100,7 +96,7 @@ include("connection.php");
 			<div class="data">
 			<div class="content-data">	
 				<div class="card">
-					<table class="table-bordered" >
+					<table  >
 					<thead> 
 									<tr>
 										<th>Nom</th>
@@ -133,7 +129,7 @@ include("connection.php");
 													</tr>';
 												}
 											}else{
-												echo "<tr> <td>Pas de patients</td></tr>";
+												echo "<tr> <td colspan='7'> Pas de patients</td></tr>";
 											}
 											
 											
