@@ -10,6 +10,49 @@ include("connection.php");
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="style.css">
 	<title>Tableau de bord</title>
+  <script>
+    
+    function validateForm() {
+    var dateOfBirth = document.getElementById('date').value;
+    var age = document.getElementById('age').value;
+
+    var currentDate = new Date();
+    var selectedDate = new Date(dateOfBirth);
+    
+    // Calculate age from date of birth
+    var dobYear = selectedDate.getFullYear();
+    var currentYear = currentDate.getFullYear();
+    var calculatedAge = currentYear - dobYear;
+    
+    // Check if the calculated age matches the entered age
+    if (calculatedAge != parseInt(age)) {
+        alert('L\'âge saisi ne correspond pas à la date de naissance.');
+        return false;
+    }
+    
+    if (selectedDate > currentDate) {
+        alert('Date de naissance doit être antérieure à la date actuelle.');
+        return false;
+    }
+    
+    if (parseInt(age) < 0 || parseInt(age) > 150) {
+        alert('Veuillez saisir un âge valide.');
+        return false;
+    }
+    
+    var poidsValue = parseFloat(document.getElementById('poids').value);
+    
+    if (poidsValue <= 0 || isNaN(poidsValue)) {
+        alert('Le poids doit être positif.');  
+        return false; 
+    }
+    
+    // If all validations pass, return true
+    return true;
+}
+    
+
+</script>
 </head>
 <body>
 	
@@ -88,9 +131,9 @@ include("connection.php");
 		<main>
 			<h1 class="title">Dashboard</h1>
 			<ul class="breadcrumbs">
-				<li><a href="listpatient.php">listpatients</a></li>
+				<li><a href="#">Ajouter Patient</a></li>
 				<li class="divider">/</li>
-				<li><a href="#" class="active">Ajouter Patient</a></li>
+				<li><a href="#" class="active">Tableau de bord</a></li>
 			</ul>
 			<div class="info-data">
 			<div class="container">
@@ -108,16 +151,16 @@ include("connection.php");
 					</div>
                 </div>
                 <div class="card-body">
-                <form method="post" action="insert.php" >
+                <form method="post" action="insert.php" onsubmit="return validateForm()">
            <div class="form-group input-control">
                     <label >Nom</label>
                     <input type="text" name="fname" class="form-control"
-                    autocomplete="off" placeholder="Entrer nom" id="nom"required>
+                    autocomplete="off" placeholder="Entrer nom" id="nom"required pattern="[a-zA-Z ]+">
                    </div>
                    <div class="form-group">
                     <label >prénom</label>
                     <input type="text" name="sname" class="form-control"
-                    autocomplete="off" placeholder="Entrer prénom" id="prenom"required>
+                    autocomplete="off" placeholder="Entrer prénom" id="prenom"required pattern="[a-zA-Z ]+">
                    </div>
                    <div class="form-group">
                     <label >Utilisateur</label>
@@ -127,11 +170,11 @@ include("connection.php");
                    <div class="form-group">
                     <label >Mot de passe</label>
                     <input type="password" name="password" class="form-control"
-                    autocomplete="off" placeholder="Entrer mot de passe" id="pass" required  >
+                    autocomplete="off" placeholder="Entrer mot de passe" id="pass" minlength="6" maxlength="12"   required  >
                    </div>
                    <div class="form-group">
                     <label >Matricule-cnss</label>
-                    <input type="text" name="matricule" class="form-control"
+                    <input type="number" name="matricule" class="form-control"
                     autocomplete="off" placeholder="Entrer Mat-cnss"  id="mat"required>
                    </div>
                    <div class="form-group">
@@ -185,7 +228,8 @@ include("connection.php");
             </div>
             <div class="modal-footer">
                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-              <button type="submit" name="ajoutM" class="btn btn-primary" onsubmit="return validateForm()">Ajouter </button>
+               <button type="submit" id="ajouterBtn" name="ajoutM" class="btn btn-primary" >Ajouter  </button>
+
                  </div>
        
 
@@ -202,11 +246,8 @@ include("connection.php");
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
 integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script src="patientverif.js"></script>
-<script>
-    document.getElementById('date').onchange = validateForm;
-    validateForm(); // Call after attaching onchange event
-</script>
+
+
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="script.js"></script>
 </body>
