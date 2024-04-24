@@ -2,8 +2,8 @@
 session_start();
 include("include/connection.php");
 
-if(isset($_GET['matricule'], $_GET['fname'], $_GET['sname'], $_GET['sexe'], $_GET['sang'], $_GET['poids'], $_GET['naissance'], $_GET['allergie'])) {
-    $matricule = $_GET['matricule'];
+if(isset( $_GET['fname'], $_GET['sname'], $_GET['sexe'], $_GET['sang'], $_GET['poids'], $_GET['naissance'], $_GET['allergie'])) {
+  
     $fname = $_GET['fname'];
     $sname = $_GET['sname'];
     $sexe = $_GET['sexe'];
@@ -16,7 +16,7 @@ if(isset($_GET['matricule'], $_GET['fname'], $_GET['sname'], $_GET['sexe'], $_GE
 }
 if (isset($_POST["submit_modif"])) {
     // Retrieve form data
-    $matricule = $_POST['matricule_modif'];
+   
     $fname = $_POST['fname'];
     $sname = $_POST['sname'];
     $sexe = $_POST['sexe'];
@@ -112,14 +112,11 @@ mysqli_close($connect);
 						<a href="profile_patient.php" class="btn-green">Retourner</a>
 					</div>
                     <div class="row" >
-                   <br>
+                   
         <form action="bouton.php" method="post">
             <!-- Populate the form fields with existing information -->
             <input type="hidden" name="matricule" value="<?php echo $matricule; ?>">
-            <div class="form-group input-control">
-            <label for="matricule_modif">Matricule</label>
-<input type="text" name="matricule_modif" id="matricule_modif" class="form-control" autocomplete="off" placeholder="Entrer matricule" value="<?php echo isset($matricule) ? $matricule : ''; ?>">
-            </div>
+           
             <div class="form-group">
             <label for="fname">Nom</label>
 <input type="text" name="fname" class="form-control" autocomplete="off" placeholder="Entrer nom" id="fname" value="<?php echo isset($fname) ? $fname : ''; ?>">
@@ -150,12 +147,12 @@ mysqli_close($connect);
             </div>
      <div class="form-group">
         <label for="sang">Sang</label>
-          <select name="sang" id="sang" class="form-control">
+          <select name="sang" id="sang" class="form-control"aria-label="Default select example">
             <option value=""></option>
-            <option value="A" <?php echo (isset($allergie) && $allergie == 'A') ? 'selected' : ''; ?>>A</option>
-            <option value="B" <?php echo (isset($allergie) && $allergie == 'B') ? 'selected' : ''; ?>>B</option>
-            <option value="AB" <?php echo (isset($allergie) && $allergie == 'AB') ? 'selected' : ''; ?>>AB</option>
-            <option value="O" <?php echo (isset($allergie) && $allergie == 'O') ? 'selected' : ''; ?>>O</option>
+            <option value="A" <?php echo (isset($sang) && $sang == 'A') ? 'selected' : ''; ?>>A</option>
+            <option value="B" <?php echo (isset($sang) && $sang == 'B') ? 'selected' : ''; ?>>B</option>
+            <option value="AB" <?php echo (isset($sang) && $sang == 'AB') ? 'selected' : ''; ?>>AB</option>
+            <option value="O" <?php echo (isset($sang) && $sang == 'O') ? 'selected' : ''; ?>>O</option>
           </select>
             </div>
            
