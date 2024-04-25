@@ -158,13 +158,15 @@ include("connection.php");
 						<label for="">Prenom</label>
 						<input type="text" name="prenom" value="<?php echo $rdv['prenom']?>" readonly>
 					</div>
-					<div class="form-group">
+					<div class="form-group input-control">
 						<label for="date">Date</label>
 						<input type="date" name="date" value="<?php echo $rdv['date']?>">
+						<div class="error"></div>
 					</div>
-					<div class="form-group">
+					<div class="form-group input-control">
 						<label for="">Temps</label>
 						<input type="time" name="heure" value="<?php echo $rdv['heure']?>">
+						<div class="error"></div>
 					</div>
 					<div>
 
@@ -181,5 +183,70 @@ include("connection.php");
 
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="script.js"></script>
+			
+	<script>
+const form = document.getElementById('rdvForm');
+const dateField = document.getElementById('dateField');
+const heureField = document.getElementById('heureField');
+
+form.addEventListener('submit', e => {
+    if (!validateInputs()) {
+        e.preventDefault();
+    }
+});
+
+const setError = (element, message) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = message;
+    inputControl.classList.add('error');
+    inputControl.classList.remove('success');
+}
+
+const setSuccess = (element) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = '';
+    inputControl.classList.remove('error');
+    inputControl.classList.add('success');
+}
+
+const validateDate = (date) => {
+    const today = new Date();
+    const selectedDate = new Date(date);
+
+    return selectedDate >= today;
+}
+
+
+
+const validateInputs = () => {
+    const dateValue = dateField.value.trim();
+    const heureValue = heureField.value.trim();
+
+    // Validate date
+    if (dateValue === '') {
+        setError(dateField, 'Veuillez sélectionner une date.');
+        return false;
+    } else if (!validateDate(dateValue)) {
+        setError(dateField, 'La date doit être aujourd\'hui ou dans le futur.');
+        return false;
+    } else {
+        setSuccess(dateField);
+    }
+
+    // Validate time
+    if (heureValue === '') {
+        setError(heureField, 'Veuillez sélectionner une heure.');
+        return false;
+    } else{
+        setSuccess(heureField);
+    }
+
+    return true;
+};
+</script>		
 </body>
 </html>
