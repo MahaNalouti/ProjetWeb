@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connection.php");
+include("connectionm.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@ include("connection.php");
 		$doc = $_SESSION['doctor'];
 	
 		try {
-			$query = "SELECT * FROM doctors WHERE unom = :doc";
+			$query = "SELECT * FROM doctor WHERE unom = :doc";
 			$stmt = $connect->prepare($query);
 			$stmt->bindParam(':doc', $doc);
 			$stmt->execute();
@@ -50,9 +50,9 @@ include("connection.php");
 	<section id="sidebar">
 		<a href="#" class="brand"><i class='bx bx-plus-medical icon' ></i>Hopital Medical</a>
 		<ul class="side-menu">
-			<li><a href="medecin.php" class="active"><i class='bx bxs-dashboard icon' ></i>Tableau de Bord</a></li>
+			<li><a href="medecin.php" class="active"><i class='bx bxs-dashboard icon' ></i> Tableau de Bord</a></li>
 			<li class="side">
-				<a href="patient.php"><i class='bx bx-table icon' ></i>Patients</a>
+				<a href="patientm.php"><i class='bx bx-table icon' ></i>Patients</a>
 			</li>
 			<li class="side">
 				<a href="rendez-vous.php"><i class='bx bx-table icon' ></i>Rendez vous</i></a>
@@ -62,7 +62,7 @@ include("connection.php");
 		<ul class="side-menu">
 			
 			<li>
-				<a href="logout.php">
+				<a href="logoutD.php">
 				<i class='bx bxs-log-out-circle icon logout'></i>
 				Déconnexion
 				</a>
@@ -77,11 +77,7 @@ include("connection.php");
 		<!-- NAVBAR -->
 		<nav>
 			<i class='bx bx-menu toggle-sidebar' ></i>
-			<div>
-				<?php
-				echo "Bienvenu Dr ".$nom;
-				?>
-			</div>
+
 			
 		</nav>
 		<!-- NAVBAR -->
@@ -100,47 +96,10 @@ include("connection.php");
 				
 				<div class="content-data">
 					<div class="head">
-						<h3>Rendez-vous d'aujordhui</h3>
+						<h3>Bonjour <?php echo $nom?> ces't votre dashboard</h3>
 					</div>
-					<table >
-						<thead>
-							<tr>
-							<th>patient
-							</th>
-							<th>Heure</th>
-							</tr>
-							
-						</thead>
-						<tbody>
-							<?php
-							$date=date("Y-m-d");
-							
-			try{
-				$query = "SELECT * FROM `rendez-vous` WHERE specialite = '$spec' AND date = '$date'";
-				$stmt = $connect->prepare($query);
-				$stmt->execute();
-				$tab_valeurs=$stmt->fetchAll(PDO::FETCH_OBJ);
-				if(count($tab_valeurs)>0){
-					foreach($tab_valeurs as $rows){
-						echo '<tr><td>'.$rows->heure.'</td>
-						<td>'.$rows->nom.'</td>
-						</tr>';
-					}
-				}else{
-					echo "<tr> <td colspan='2'>Pas de patients</td></tr>";
-				}
-				
-				
-			
-
-			
-			}catch(PDOException $excp){
-				echo "Errer:".$excp->getMessage();
-			}
-
-							?>
-						</tbody>
-					</table>
+					
+					
 				</div>
 			</div>
 		</main>

@@ -1,0 +1,26 @@
+.input-control.error input {
+    border-color: red;
+}
+.input-control.success input{
+    border-color: green;
+
+}
+.input-control .error{
+    color: red;
+    font-size: 9px;
+    height: 13px;
+    
+}
+.input-control.error select {
+    border-color: red;
+}
+
+.input-control.success select {
+    border-color: green;
+}
+.select-error {
+    border-color: red;
+}
+.select-error {
+    border-color: green;
+}
